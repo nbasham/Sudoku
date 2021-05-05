@@ -1,6 +1,6 @@
 import Foundation
 
-class CellModel {
+struct CellModel {
     var answer: Int
     var number: CellNumberState
     var markers: Set<Int>
@@ -11,6 +11,12 @@ class CellModel {
             return answer == number
         }
         return false
+    }
+
+    init(answer: Int, number: CellNumberState) {
+        self.answer = answer
+        self.number = number
+        self.markers = []
     }
 
     init(answer: Int, isClue: Bool) {

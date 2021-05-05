@@ -14,6 +14,7 @@
 		20C4A9372641C5F4009B0657 /* CellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C4A9362641C5F4009B0657 /* CellModel.swift */; };
 		20C4A9392641C73A009B0657 /* SudokuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C4A9382641C73A009B0657 /* SudokuViewModel.swift */; };
 		20C4A93B2641DD0A009B0657 /* SudokuState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C4A93A2641DD0A009B0657 /* SudokuState.swift */; };
+		20C4A93D26422A69009B0657 /* CellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C4A93C26422A69009B0657 /* CellViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		20C4A9362641C5F4009B0657 /* CellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellModel.swift; sourceTree = "<group>"; };
 		20C4A9382641C73A009B0657 /* SudokuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuViewModel.swift; sourceTree = "<group>"; };
 		20C4A93A2641DD0A009B0657 /* SudokuState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuState.swift; sourceTree = "<group>"; };
+		20C4A93C26422A69009B0657 /* CellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,13 +60,14 @@
 		20C4A9262641C5CD009B0657 /* Sudoku */ = {
 			isa = PBXGroup;
 			children = (
-				20C4A9272641C5CD009B0657 /* SudokuApp.swift */,
-				20C4A9292641C5CD009B0657 /* ContentView.swift */,
-				20C4A9382641C73A009B0657 /* SudokuViewModel.swift */,
-				20C4A9362641C5F4009B0657 /* CellModel.swift */,
-				20C4A93A2641DD0A009B0657 /* SudokuState.swift */,
-				20C4A92B2641C5CE009B0657 /* Assets.xcassets */,
 				20C4A9302641C5CE009B0657 /* Info.plist */,
+				20C4A9362641C5F4009B0657 /* CellModel.swift */,
+				20C4A93C26422A69009B0657 /* CellViewModel.swift */,
+				20C4A9292641C5CD009B0657 /* ContentView.swift */,
+				20C4A9272641C5CD009B0657 /* SudokuApp.swift */,
+				20C4A93A2641DD0A009B0657 /* SudokuState.swift */,
+				20C4A9382641C73A009B0657 /* SudokuViewModel.swift */,
+				20C4A92B2641C5CE009B0657 /* Assets.xcassets */,
 				20C4A92D2641C5CE009B0657 /* Preview Content */,
 			);
 			path = Sudoku;
@@ -151,6 +154,7 @@
 				20C4A9282641C5CD009B0657 /* SudokuApp.swift in Sources */,
 				20C4A9372641C5F4009B0657 /* CellModel.swift in Sources */,
 				20C4A9392641C73A009B0657 /* SudokuViewModel.swift in Sources */,
+				20C4A93D26422A69009B0657 /* CellViewModel.swift in Sources */,
 				20C4A93B2641DD0A009B0657 /* SudokuState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

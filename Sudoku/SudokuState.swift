@@ -21,31 +21,29 @@ class SudokuState: ObservableObject {
     }
     
     func setGuess(number: Int) {
-        selectedCell.markers.removeAll()
+        var numberState: CellNumberState
         switch selectedCell.number {
             case .empty:
-                selectedCell.number = .guess(number)
-                print("cell[\(selectionIndex)] set to \(number)")
+                numberState = .guess(number)
             case .clue:
                 fatalError("Cannot set values on clues.")
             case .guess(let n):
                 if n == number {
-                    selectedCell.number = .empty
-                    print("cell[\(selectionIndex)] cleared")
+                    numberState = .empty
                 } else {
-                    selectedCell.number = .guess(number)
-                    print("cell[\(selectionIndex)] set to \(number)")
+                    numberState = .guess(number)
                }
         }
+        cells[selectionIndex] = CellModel(answer: selectedCell.answer, number: numberState)
     }
 
     func setMarker(number: Int) {
-        if selectedCell.markers.contains(number) {
-            selectedCell.markers.remove(number)
-        } else {
-            selectedCell.markers.insert(number)
-        }
-        selectedCell.number = .empty
-        print("cell[\(selectionIndex)] markers \(selectedCell.markers)")
+//        if selectedCell.markers.contains(number) {
+//            selectedCell.markers.remove(number)
+//        } else {
+//            selectedCell.markers.insert(number)
+//        }
+//        selectedCell.number = .empty
+//        print("cell[\(selectionIndex)] markers \(selectedCell.markers)")
     }
 }
