@@ -7,19 +7,6 @@ class SudokuState: ObservableObject {
     var selectedCell: CellModel { cells[selectionIndex] }
     var isSolved: Bool { cells.allSatisfy { $0.isCorrect } }
 
-    init() {
-        $cells
-            .dropFirst() // ignore empty array value from cells declaration
-            .sink { o in
-                print("cells now has \(o.count) elements.")
-                self.selectionIndex = o.firstIndex { cell in
-                    cell.isEmpty
-                } ?? 0
-                print("initial selection set to \(self.selectionIndex).")
-            }
-            .store(in: &subscriptions)
-    }
-    
     func setGuess(number: Int) {
         var numberState: CellNumberState
         switch selectedCell.number {
@@ -38,12 +25,14 @@ class SudokuState: ObservableObject {
     }
 
     func setMarker(number: Int) {
-//        if selectedCell.markers.contains(number) {
-//            selectedCell.markers.remove(number)
-//        } else {
-//            selectedCell.markers.insert(number)
-//        }
-//        selectedCell.number = .empty
-//        print("cell[\(selectionIndex)] markers \(selectedCell.markers)")
+        if selectedCell.markers.contains(number) {
+            var markers = selectedCell.markers
+            markers.remove(number)
+            cells[selectionIndex] = CellModel(answer: selectedCell.answer, markers: markers)
+        } else {
+            var markers = selectedCell.markers
+            markers.insert(number)
+            cells[selectionIndex] = CellModel(answer: selectedCell.answer, markers: markers)
+        }
     }
 }

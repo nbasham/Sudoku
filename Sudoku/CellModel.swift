@@ -24,6 +24,12 @@ struct CellModel {
         self.number = isClue ? .clue : .empty
         self.markers = []
     }
+
+    init(answer: Int, markers: Set<Int>) {
+        self.answer = answer
+        self.number = .empty
+        self.markers = markers
+    }
 }
 
 extension CellModel: CustomStringConvertible {
@@ -35,6 +41,10 @@ extension CellModel: CustomStringConvertible {
         s += ""
         return s
     }
+}
+
+extension Array where Element == CellModel {
+    var isSovled: Bool { allSatisfy {$0.isCorrect} }
 }
 
 enum CellNumberState {
@@ -57,7 +67,6 @@ extension CellNumberState: Equatable {
 extension CellNumberState: CustomStringConvertible {
     var description: String {
         switch self {
-            
             case .empty:
                 return ""
             case .clue:

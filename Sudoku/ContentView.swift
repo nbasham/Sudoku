@@ -2,8 +2,10 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var viewModel: SudokuViewModel
-    let boardColumns = Array(repeating: GridItem(.flexible(), spacing: 0), count: 9)
-    let pickerColumns = Array(repeating: GridItem(.flexible()), count: 3)
+    private let boardColumns = Array(repeating: GridItem(.flexible(), spacing: 0), count: 9)
+    private let pickerColumns = Array(repeating: GridItem(.flexible(), spacing: 4), count: 3)
+    private let markerColumns = Array(repeating: GridItem(.flexible(), spacing: 0), count: 3)
+    @Environment(\.verticalSizeClass) var sizeClass
 
     init() {
         let viewModel = SudokuViewModel()
@@ -13,22 +15,38 @@ struct ContentView: View {
     var body: some View {
         VStack {
             boardView
+                .padding()
             HStack {
+                Spacer()
                 VStack {
                     Text("Numbers")
                     numberPicker
+                        .frame(width: 152)
                 }
                 Spacer(minLength: 24)
                 VStack {
                     Text("Markers")
                     markerPicker
+                        .frame(width: 152)
                 }
+                Spacer()
             }
             .padding()
         }
         .padding()
         .onAppear {
             viewModel.startGame()
+        }
+        .navigationBarItems(trailing: Button("Debug", action: viewModel.debugPublisher.send))
+        .alert(isPresented: $viewModel.isSolved) {
+            Alert(
+                title: Text("Congratulations!"),
+                message: Text("Would you like to play again?"),
+                primaryButton: .default(Text("You bet!"), action: {
+                    viewModel.startGame()
+                }),
+                secondaryButton: .cancel()
+            )
         }
     }
     
@@ -42,6 +60,9 @@ struct ContentView: View {
                         Text("\(cell.text)")
                             .foregroundColor(cell.color)
                     )
+                    .overlay(
+                        markersView(cell: cell)
+                    )
                     .background(
                         viewModel.selectionIndex == cell.id ? Color.green : .white
                     )
@@ -52,27 +73,23 @@ struct ContentView: View {
         }
     }
     
+    func markersView(cell: CellViewModel) -> some View {
+        LazyVGrid(columns: markerColumns, spacing: sizeClass == .compact ? 0 : 4) {
+                ForEach(0..<9, id: \.self) { index in
+                    Text(cell.markers[index])
+                        .font(.system(size: sizeClass == .compact ? 3 : 16, design: .monospaced))
+                        .minimumScaleFactor(0.1)
+                }
+            }
+        .fixedSize()
+    }
+    
     var numberPicker: some View {
         LazyVGrid(columns: pickerColumns, alignment: .center, spacing: 2) {
             ForEach(1..<10, id: \.self) { index in
-                Button(action: {
+                pickerButton(index: index) {
                     viewModel.numberPublisher.send(index)
-                }, label: {
-                    ZStack {
-                        Color.blue
-                            .aspectRatio(1, contentMode: .fit
-                            )
-                            .mask(
-                                RoundedRectangle(cornerRadius: 3)
-                            )
-                    }
-                    .overlay(
-                        Text("\(index)")
-                            .bold()
-                            .foregroundColor(.white)
-                    )
                 }
-                )
             }
         }
     }
@@ -80,25 +97,32 @@ struct ContentView: View {
     var markerPicker: some View {
         LazyVGrid(columns: pickerColumns, spacing: 2) {
             ForEach(1..<10, id: \.self) { index in
-                Button(action: {
+                pickerButton(index: index) {
                     viewModel.markerPublisher.send(index)
-                }, label: {
-                    ZStack {
-                        Color.blue
-                            .aspectRatio(1, contentMode: .fit
-                            )
-                            .mask(
-                                RoundedRectangle(cornerRadius: 3)
-                            )
-                    }
-                        .overlay(
-                            Text("\(index)")
-                                .foregroundColor(.white)
-                        )
                 }
-                )
             }
         }
+    }
+    
+    func pickerButton(index: Int, action: @escaping () -> ()) -> some View {
+        Button(action: {
+            action()
+        }, label: {
+            ZStack {
+                Color.blue
+                    .aspectRatio(1, contentMode: .fit
+                    )
+                    .mask(
+                        RoundedRectangle(cornerRadius: 3)
+                    )
+            }
+            .overlay(
+                Text("\(index)")
+                    .foregroundColor(.white)
+            )
+        }
+        )
+        .frame(width: 44, height: 44)
     }
 }
 
