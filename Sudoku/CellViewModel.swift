@@ -5,32 +5,35 @@ struct CellViewModel: Identifiable {
     let text: String
     let color: Color
     let markers: [String]
-    
-    init(_ model: CellModel, index: Int) {
-        id = index
-        if model.markers.isEmpty {
-            markers = Array(repeating: "", count: 9)
-            switch model.number {
-                case .empty:
-                    text = ""
-                    color = .primary
-                case .clue:
-                    text = "\(model.answer)"
-                    color = .blue
-                case .guess(let number):
-                    text = "\(number)"
-                    color = number == model.answer ? .primary : .red
-            }
-        } else {
-            text = ""
-            color = .primary
-            var a = Array(repeating: "", count: 9)
-            for i in 1...9 {
-                if model.markers.contains(i) {
-                    a[i-1] = "\(i)"
-                }
-            }
-            markers = a
+
+    init(id: Int, modelMarkers: Set<Int>) {
+        self.id = id
+        text = ""
+        color = .primary
+        markers = (0..<9).map { modelMarkers.contains($0+1) ? "\($0+1)" : "" }
+    }
+
+    init(id: Int, model: CellModel) {
+        self.id = id
+        text = model.text
+        color = model.color
+        markers = Array(repeating: "", count: 9)
+    }
+}
+
+private extension CellModel {
+    var text: String {
+        switch self.attribute {
+        case .empty: return ""
+        case .clue: return "\(answer)"
+        case let .guess(number): return "\(number)"
+        }
+    }
+    var color: Color {
+        switch self.attribute {
+        case .empty: return .primary
+        case .clue: return .blue
+        case let .guess(number): return number == answer ? .primary : .red
         }
     }
 }

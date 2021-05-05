@@ -11,7 +11,7 @@ struct ContentView: View {
         let viewModel = SudokuViewModel()
         _viewModel = StateObject(wrappedValue: viewModel)
     }
-    
+
     var body: some View {
         VStack {
             boardView
@@ -49,7 +49,7 @@ struct ContentView: View {
             )
         }
     }
-    
+
     var boardView: some View {
         LazyVGrid(columns: boardColumns, spacing: 0) {
             ForEach(viewModel.cells, id: \.id) { cell in
@@ -72,7 +72,7 @@ struct ContentView: View {
             }
         }
     }
-    
+
     func markersView(cell: CellViewModel) -> some View {
         LazyVGrid(columns: markerColumns, spacing: sizeClass == .compact ? 0 : 4) {
                 ForEach(0..<9, id: \.self) { index in
@@ -83,7 +83,7 @@ struct ContentView: View {
             }
         .fixedSize()
     }
-    
+
     var numberPicker: some View {
         LazyVGrid(columns: pickerColumns, alignment: .center, spacing: 2) {
             ForEach(1..<10, id: \.self) { index in
@@ -93,7 +93,7 @@ struct ContentView: View {
             }
         }
     }
-    
+
     var markerPicker: some View {
         LazyVGrid(columns: pickerColumns, spacing: 2) {
             ForEach(1..<10, id: \.self) { index in
@@ -103,8 +103,8 @@ struct ContentView: View {
             }
         }
     }
-    
-    func pickerButton(index: Int, action: @escaping () -> ()) -> some View {
+
+    func pickerButton(index: Int, action: @escaping () -> Void) -> some View {
         Button(action: {
             action()
         }, label: {
