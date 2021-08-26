@@ -28,16 +28,15 @@ struct SudokuGridView: View {
 
 struct SudokuGridView_Previews: PreviewProvider {
     static var previews: some View {
-        let state = SudokuState()
-        let data = SudokuTestData(state: state)
-        let viewModel = SudokuViewModel(data: data, state: state)
-        Rectangle()
+        let controller = SudokuController(puzzleSource: TestPuzzleSource())
+        UserAction.startGame.send()
+        return Rectangle()
             .fill(Color.yellow)
             .frame(width: 344, height: 344)
             .overlay(
                 GeometryReader { reader in
                     SudokuGridView(size: reader.size)
-                        .environmentObject(viewModel)
+                        .environmentObject(controller.viewModel)
                 }
             )
     }

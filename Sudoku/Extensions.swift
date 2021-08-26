@@ -1,5 +1,18 @@
 import Foundation
 
+public extension Collection {
+    /// Returns the element at the specified index iff it is within bounds, otherwise nil.
+    subscript (safe index: Index) -> Element? {
+        return indices.contains(index) ? self[index] : nil
+    }
+}
+
+extension Notification.Name {
+    func send(obj: Any? = nil) {
+        NotificationCenter.default.post(name: self, object: obj)
+    }
+}
+
 //  Paul Hudson
 // swiftlint:disable line_length
 extension Bundle {

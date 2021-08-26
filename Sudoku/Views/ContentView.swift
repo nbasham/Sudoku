@@ -1,20 +1,14 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var viewModel: SudokuViewModel
+    @EnvironmentObject var viewModel: SudokuViewModel
     private let boardColumns = Array(repeating: GridItem(.flexible(), spacing: 0), count: 9)
     private let pickerColumns = Array(repeating: GridItem(.flexible(), spacing: 4), count: 3)
     @Environment(\.verticalSizeClass) var sizeClass
 
-    init() {
-        let state = SudokuState()
-        let data = SudokuFileData(state: state)
-        let viewModel = SudokuViewModel(data: data, state: state)
-        _viewModel = StateObject(wrappedValue: viewModel)
-    }
-
     var body: some View {
         VStack {
+            usageView()
             boardView
                 .padding()
             HStack {
@@ -37,16 +31,16 @@ struct ContentView: View {
         .padding(.horizontal)
         .padding(.horizontal, sizeClass == .compact ? 0 : 64)
         .onAppear {
-            viewModel.startGame()
+            UserAction.startGame.send()
         }
-        .navigationBarItems(trailing: Button("Debug", action: viewModel.debugPublisher.send))
-        .navigationTitle(viewModel.difficutlyLevel)
+        .navigationBarItems(trailing: Button("Debug", action: { UserAction.almostSolve.send() }))
+        .navigationTitle(viewModel.difficultyLevel)
         .alert(isPresented: $viewModel.isSolved) {
             Alert(
                 title: Text("Congratulations!"),
                 message: Text("Would you like to play again?"),
                 primaryButton: .default(Text("You bet!"), action: {
-                    viewModel.startGame()
+                    UserAction.startGame.send()
                 }),
                 secondaryButton: .cancel()
             )
@@ -71,7 +65,7 @@ struct ContentView: View {
         LazyVGrid(columns: pickerColumns, alignment: .center, spacing: 2) {
             ForEach(1..<10, id: \.self) { index in
                 pickerButton(index: index) {
-                    viewModel.numberPublisher.send(index)
+                    UserAction.numberTouch.send(obj: index)
                 }
             }
         }
@@ -81,10 +75,22 @@ struct ContentView: View {
         LazyVGrid(columns: pickerColumns, spacing: 2) {
             ForEach(1..<10, id: \.self) { index in
                 pickerButton(index: index) {
-                    viewModel.markerPublisher.send(index)
+                    UserAction.markerTouch.send(obj: index)
                 }
             }
         }
+    }
+
+    func usageView() -> some View {
+        HStack(spacing: 10) {
+            ForEach(0...8, id: \.self) { index in
+                VStack(spacing: 2) {
+                    Text("\(index + 1)")
+                    NumberUsageView(usage: viewModel.usage[index])
+                }
+            }
+        }
+        .padding(.horizontal)
     }
 
     func pickerButton(index: Int, action: @escaping () -> Void) -> some View {

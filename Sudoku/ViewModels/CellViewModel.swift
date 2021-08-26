@@ -5,15 +5,23 @@ struct CellViewModel: Identifiable {
     let text: String
     let color: Color
     let markers: [String]
+    let markerConflicts: [Bool]
 
-    init(id: Int, model: CellModel) {
+    init(id: Int, model: CellModel, conflicts: (Int, Int) -> Bool) {
         self.id = id
         self.text = model.markers.isEmpty ? model.text : ""
         color = model.markers.isEmpty ? model.color : Color(UIColor.label)
         if model.markers.isEmpty {
             markers = Array(repeating: "", count: 9)
+            markerConflicts = Array(repeating: false, count: 9)
         } else {
             markers = (0..<9).map { model.markers.contains($0+1) ? "\($0+1)" : "" }
+            var tempMarkerConflicts = Array(repeating: false, count: 9)
+            markers.filter { $0 != "" }.forEach { marker in
+                let markerInt = Int(marker)!
+                tempMarkerConflicts[markerInt - 1] = conflicts(id, markerInt)
+            }
+            markerConflicts = tempMarkerConflicts
         }
     }
 }
@@ -49,7 +57,8 @@ extension CellBackground {
     }
 
     static func calc(cells: [CellViewModel], selectedIndex: Int, selectedNumber: Int?) -> [Color] {
-        cells.map {
+        guard !cells.isEmpty else { return initial }
+        return cells.map {
             let index =  $0.id
             let isHighlighted = $0.text == "\(selectedNumber ?? -1)"
             let isSelected = index == selectedIndex
@@ -57,7 +66,7 @@ extension CellBackground {
         }
     }
 
-    static func calc(selectionIndex: Int) -> [Color] {
-        (0..<81).map { CellBackground(cellIndex: $0, isSelected: $0==selectionIndex).color }
+    static var initial: [Color] {
+        Array(repeating: .white, count: 81)
     }
 }

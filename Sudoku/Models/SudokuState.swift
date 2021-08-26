@@ -5,6 +5,11 @@ class SudokuState: ObservableObject {
     @Published var cells: [CellModel] = []
     private var subscriptions = Set<AnyCancellable>()
 
+    func startGame(cells: [CellModel]) {
+        self.cells = cells
+        selectionIndex = cells.firstIndex { $0.isEmpty } ?? 0
+    }
+
     func setGuess(number: Int) {
         var attribute: CellAttribute
         switch selectedCell.attribute {
@@ -12,6 +17,8 @@ class SudokuState: ObservableObject {
         case .clue: fatalError("Cannot set values on clues.")
         case .guess(let lastGuess): attribute = lastGuess == number ? .empty : .guess(number)
         }
+        removeExistingGuesses(forNumber: number)
+        removeMarkersEqualToGuess(guess: number)
         cells[selectionIndex] = CellModel(answer: selectedCell.answer, attribute: attribute)
     }
 
@@ -26,12 +33,34 @@ class SudokuState: ObservableObject {
             cells[selectionIndex] = CellModel(answer: selectedCell.answer, markers: markers)
         }
     }
+
+    private func removeExistingGuesses(forNumber number: Int) {
+        let gridIndexes = SudokuConstants.gridIndexes(selectionIndex)
+        for gridIndex in gridIndexes {
+            let gridCell = cells[gridIndex]
+            if gridCell.guess == number {
+                cells[gridIndex] = CellModel(answer: cells[gridIndex].answer, attribute: .empty)
+            }
+        }
+    }
+
+    private func removeMarkersEqualToGuess(guess number: Int) {
+        let rowColGridIndexes = SudokuConstants.rowColGridIndexes(selectionIndex)
+        for index in rowColGridIndexes {
+            if cells[index].markers.contains(number) {
+                cells[index].markers.remove(number)
+            }
+        }
+    }
 }
 
 //  Accessors
 extension SudokuState {
     var selectedCell: CellModel { cells[selectionIndex] }
-    var isSolved: Bool { cells.allSatisfy { $0.isCorrect } }
+    var isSolved: Bool {
+        guard !cells.isEmpty else { return false }
+        return cells.allSatisfy { $0.isCorrect }
+    }
     var clueCount: Int { cells.filter { $0.attribute == .clue }.count }
     var difficultyLevel: String {
         switch clueCount {

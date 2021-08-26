@@ -46,6 +46,20 @@ extension CellModel {
         case .guess(let number): return number == answer
         }
     }
+    var guess: Int? {
+        switch attribute {
+        case .guess(let number): return number
+        case .empty: return nil
+        case .clue: return nil
+        }
+    }
+    var value: Int? {
+        switch attribute {
+        case .guess(let number): return number
+        case .empty: return nil
+        case .clue: return answer
+        }
+    }
 }
 
 extension CellModel: ExpressibleByStringLiteral {
@@ -55,6 +69,7 @@ extension CellModel: ExpressibleByStringLiteral {
         self = CellModel(value: intValue)
     }
 }
+
 extension CellModel: CustomStringConvertible {
     var description: String {
         var descriptionString = "\n"

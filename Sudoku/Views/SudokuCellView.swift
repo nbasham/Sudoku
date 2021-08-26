@@ -23,7 +23,7 @@ struct SudokuCellView: View {
                 viewModel.cellBackgroundColors[cell.id]
             )
             .onTapGesture {
-                viewModel.select(index: cell.id)
+                UserAction.cellTouch.send(obj: cell.id)
             }
     }
 
@@ -34,6 +34,7 @@ struct SudokuCellView: View {
                     Text(cell.markers[index])
                         .minimumScaleFactor(0.1)
                         .multilineTextAlignment(.center)
+                        .foregroundColor(cell.markerConflicts[index] ? .red : .primary)
                         .frame(width: reader.size.width, height: reader.size.height/3)
                 }
             }
@@ -45,26 +46,24 @@ struct SudokuCellView: View {
 struct SudokuCellView_Previews: PreviewProvider {
     static var previews: some View {
         let len: CGFloat = UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad ? 100 : 32
-        let state = SudokuState()
-        let data = SudokuTestData(state: state)
-        let viewModel = SudokuViewModel(data: data, state: state)
-        viewModel.startGame()
-        viewModel.select(index: 0)
+        let controller = SudokuController(puzzleSource: TestPuzzleSource())
+        UserAction.startGame.send()
+        UserAction.cellTouch.send(obj: 0)
         for index in 1...9 {
-            viewModel.markerPublisher.send(index)
+            UserAction.markerTouch.send(obj: index)
         }
-        viewModel.select(index: 1)
-        viewModel.numberPublisher.send(2)
-        viewModel.select(index: 2)
-        viewModel.numberPublisher.send(3)
-        viewModel.select(index: 3)
+        UserAction.cellTouch.send(obj: 1)
+        UserAction.numberTouch.send(obj: 2)
+        UserAction.cellTouch.send(obj: 2)
+        UserAction.numberTouch.send(obj: 3)
+        UserAction.cellTouch.send(obj: 3)
         return VStack {
             ForEach(0..<4) { index in
-                SudokuCellView(cell: viewModel.cells[index])
+                SudokuCellView(cell: controller.viewModel.cells[index])
                     .frame(width: len, height: len)
             }
         }
-        .environmentObject(viewModel)
+        .environmentObject(controller.viewModel)
         .preferredColorScheme(.dark)
     }
 }

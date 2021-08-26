@@ -39,3 +39,11 @@ struct CellBackground {
         [60, 61, 62, 69, 70, 71, 78, 79, 80]
     ]
 }
+
+extension CellBackground: CustomStringConvertible {
+    var description: String {
+        var descriptionString = "\n"
+        descriptionString += "background: \(state).\n"
+        return descriptionString
+    }
+}
