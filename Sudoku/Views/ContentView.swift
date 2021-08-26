@@ -4,11 +4,12 @@ struct ContentView: View {
     @StateObject var viewModel: SudokuViewModel
     private let boardColumns = Array(repeating: GridItem(.flexible(), spacing: 0), count: 9)
     private let pickerColumns = Array(repeating: GridItem(.flexible(), spacing: 4), count: 3)
-    private let markerColumns = Array(repeating: GridItem(.flexible(), spacing: 0), count: 3)
     @Environment(\.verticalSizeClass) var sizeClass
 
     init() {
-        let viewModel = SudokuViewModel()
+        let state = SudokuState()
+        let data = SudokuFileData(state: state)
+        let viewModel = SudokuViewModel(data: data, state: state)
         _viewModel = StateObject(wrappedValue: viewModel)
     }
 
@@ -33,11 +34,13 @@ struct ContentView: View {
             }
             .padding()
         }
-        .padding()
+        .padding(.horizontal)
+        .padding(.horizontal, sizeClass == .compact ? 0 : 64)
         .onAppear {
             viewModel.startGame()
         }
         .navigationBarItems(trailing: Button("Debug", action: viewModel.debugPublisher.send))
+        .navigationTitle(viewModel.difficutlyLevel)
         .alert(isPresented: $viewModel.isSolved) {
             Alert(
                 title: Text("Congratulations!"),
@@ -48,40 +51,20 @@ struct ContentView: View {
                 secondaryButton: .cancel()
             )
         }
+        .environmentObject(viewModel)
     }
 
     var boardView: some View {
         LazyVGrid(columns: boardColumns, spacing: 0) {
             ForEach(viewModel.cells, id: \.id) { cell in
-                Rectangle()
-                    .stroke()
-                    .aspectRatio(1, contentMode: .fill)
-                    .overlay(
-                        Text("\(cell.text)")
-                            .foregroundColor(cell.color)
-                    )
-                    .overlay(
-                        markersView(cell: cell)
-                    )
-                    .background(
-                        viewModel.selectionIndex == cell.id ? Color.green : .white
-                    )
-                    .onTapGesture {
-                        viewModel.select(index: cell.id)
-                    }
+                SudokuCellView(cell: cell)
             }
         }
-    }
-
-    func markersView(cell: CellViewModel) -> some View {
-        LazyVGrid(columns: markerColumns, spacing: sizeClass == .compact ? 0 : 4) {
-                ForEach(0..<9, id: \.self) { index in
-                    Text(cell.markers[index])
-                        .font(.system(size: sizeClass == .compact ? 3 : 16, design: .monospaced))
-                        .minimumScaleFactor(0.1)
-                }
+        .overlay(
+            GeometryReader { reader in
+                SudokuGridView(size: reader.size)
             }
-        .fixedSize()
+        )
     }
 
     var numberPicker: some View {
@@ -105,7 +88,8 @@ struct ContentView: View {
     }
 
     func pickerButton(index: Int, action: @escaping () -> Void) -> some View {
-        Button(action: {
+        let len: CGFloat = 44 // sizeClass == .compact ? 44 : 64
+        return Button(action: {
             action()
         }, label: {
             ZStack {
@@ -122,12 +106,17 @@ struct ContentView: View {
             )
         }
         )
-        .frame(width: 44, height: 44)
+//        .padding(.horizontal, sizeClass == .compact ? 4 : 10)
+        .frame(width: len, height: len)
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        NavigationView {
+            ContentView()
+        }
+        .preferredColorScheme(.dark)
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 }

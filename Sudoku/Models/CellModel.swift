@@ -9,18 +9,26 @@ struct CellModel {
     var attribute: CellAttribute
     var markers: Set<Int>
 
+    /// Used when loading from data/file
+    init(value: Int) {
+        if value > 9 {
+            self.answer = value - 9
+            self.attribute = .clue
+        } else {
+            self.answer = value
+            self.attribute = .empty
+        }
+        self.markers = []
+    }
+
+    /// Used when setting or clearing a guess
     init(answer: Int, attribute: CellAttribute) {
         self.answer = answer
         self.attribute = attribute
         self.markers = []
     }
 
-    init(answer: Int, isClue: Bool) {
-        self.answer = answer
-        self.attribute = isClue ? .clue : .empty
-        self.markers = []
-    }
-
+    /// Used when setting or clearing markers
     init(answer: Int, markers: Set<Int>) {
         self.answer = answer
         self.attribute = .empty
@@ -40,6 +48,13 @@ extension CellModel {
     }
 }
 
+extension CellModel: ExpressibleByStringLiteral {
+    /// Currently not used
+    public init(stringLiteral value: String) {
+        guard let intValue = Int(value) else { fatalError() }
+        self = CellModel(value: intValue)
+    }
+}
 extension CellModel: CustomStringConvertible {
     var description: String {
         var descriptionString = "\n"

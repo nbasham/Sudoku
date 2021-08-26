@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		200540F626D73066001780D9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200540F526D73066001780D9 /* Extensions.swift */; };
 		20C4A9282641C5CD009B0657 /* SudokuApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C4A9272641C5CD009B0657 /* SudokuApp.swift */; };
 		20C4A92A2641C5CD009B0657 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C4A9292641C5CD009B0657 /* ContentView.swift */; };
 		20C4A92C2641C5CE009B0657 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20C4A92B2641C5CE009B0657 /* Assets.xcassets */; };
@@ -16,9 +17,30 @@
 		20C4A93B2641DD0A009B0657 /* SudokuState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C4A93A2641DD0A009B0657 /* SudokuState.swift */; };
 		20C4A93D26422A69009B0657 /* CellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C4A93C26422A69009B0657 /* CellViewModel.swift */; };
 		20C4A93F26434317009B0657 /* CellAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C4A93E26434317009B0657 /* CellAttribute.swift */; };
+		20C4A948264584F8009B0657 /* SudokuStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C4A947264584F8009B0657 /* SudokuStateTests.swift */; };
+		20C4A9502645877F009B0657 /* SudokuDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C4A94F2645877F009B0657 /* SudokuDataService.swift */; };
+		20C4A9522645D8E8009B0657 /* SudokuViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C4A9512645D8E8009B0657 /* SudokuViewModelTests.swift */; };
+		20C4A9542645E910009B0657 /* puzzles.json in Resources */ = {isa = PBXBuildFile; fileRef = 20C4A9532645E910009B0657 /* puzzles.json */; };
+		20C4A95626473157009B0657 /* SudokuGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C4A95526473157009B0657 /* SudokuGridView.swift */; };
+		20C4A958264732BA009B0657 /* SudokuCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C4A957264732BA009B0657 /* SudokuCellView.swift */; };
+		20C4A95D26484933009B0657 /* CellBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C4A95C26484933009B0657 /* CellBackground.swift */; };
+		20F9944E264B1D4B00E70461 /* SudokuFileData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F9944D264B1D4B00E70461 /* SudokuFileData.swift */; };
+		20F99450264B1D8400E70461 /* SudokuTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F9944F264B1D8400E70461 /* SudokuTestData.swift */; };
+		20F99452264B1DC500E70461 /* PuzzleIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F99451264B1DC500E70461 /* PuzzleIterator.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		20C4A94A264584F8009B0657 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 20C4A91C2641C5CD009B0657 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 20C4A9232641C5CD009B0657;
+			remoteInfo = Sudoku;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		200540F526D73066001780D9 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		20C4A9242641C5CD009B0657 /* Sudoku.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sudoku.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		20C4A9272641C5CD009B0657 /* SudokuApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuApp.swift; sourceTree = "<group>"; };
 		20C4A9292641C5CD009B0657 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -30,10 +52,29 @@
 		20C4A93A2641DD0A009B0657 /* SudokuState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuState.swift; sourceTree = "<group>"; };
 		20C4A93C26422A69009B0657 /* CellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellViewModel.swift; sourceTree = "<group>"; };
 		20C4A93E26434317009B0657 /* CellAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellAttribute.swift; sourceTree = "<group>"; };
+		20C4A945264584F8009B0657 /* SudokuTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SudokuTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		20C4A947264584F8009B0657 /* SudokuStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuStateTests.swift; sourceTree = "<group>"; };
+		20C4A949264584F8009B0657 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		20C4A94F2645877F009B0657 /* SudokuDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuDataService.swift; sourceTree = "<group>"; };
+		20C4A9512645D8E8009B0657 /* SudokuViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuViewModelTests.swift; sourceTree = "<group>"; };
+		20C4A9532645E910009B0657 /* puzzles.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = puzzles.json; sourceTree = "<group>"; };
+		20C4A95526473157009B0657 /* SudokuGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuGridView.swift; sourceTree = "<group>"; };
+		20C4A957264732BA009B0657 /* SudokuCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuCellView.swift; sourceTree = "<group>"; };
+		20C4A95C26484933009B0657 /* CellBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellBackground.swift; sourceTree = "<group>"; };
+		20F9944D264B1D4B00E70461 /* SudokuFileData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuFileData.swift; sourceTree = "<group>"; };
+		20F9944F264B1D8400E70461 /* SudokuTestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuTestData.swift; sourceTree = "<group>"; };
+		20F99451264B1DC500E70461 /* PuzzleIterator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleIterator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		20C4A9212641C5CD009B0657 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		20C4A942264584F8009B0657 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -47,6 +88,7 @@
 			isa = PBXGroup;
 			children = (
 				20C4A9262641C5CD009B0657 /* Sudoku */,
+				20C4A946264584F8009B0657 /* SudokuTests */,
 				20C4A9252641C5CD009B0657 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -55,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				20C4A9242641C5CD009B0657 /* Sudoku.app */,
+				20C4A945264584F8009B0657 /* SudokuTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -63,15 +106,14 @@
 			isa = PBXGroup;
 			children = (
 				20C4A9302641C5CE009B0657 /* Info.plist */,
-				20C4A9362641C5F4009B0657 /* CellModel.swift */,
-				20C4A93E26434317009B0657 /* CellAttribute.swift */,
-				20C4A93C26422A69009B0657 /* CellViewModel.swift */,
-				20C4A9292641C5CD009B0657 /* ContentView.swift */,
+				200540F526D73066001780D9 /* Extensions.swift */,
 				20C4A9272641C5CD009B0657 /* SudokuApp.swift */,
-				20C4A93A2641DD0A009B0657 /* SudokuState.swift */,
-				20C4A9382641C73A009B0657 /* SudokuViewModel.swift */,
 				20C4A92B2641C5CE009B0657 /* Assets.xcassets */,
+				20C4A95A264736AE009B0657 /* Data */,
+				20C4A95B26484918009B0657 /* Models */,
 				20C4A92D2641C5CE009B0657 /* Preview Content */,
+				20F9944C264B1CEA00E70461 /* ViewModels */,
+				20C4A9592647364F009B0657 /* Views */,
 			);
 			path = Sudoku;
 			sourceTree = "<group>";
@@ -82,6 +124,58 @@
 				20C4A92E2641C5CE009B0657 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		20C4A946264584F8009B0657 /* SudokuTests */ = {
+			isa = PBXGroup;
+			children = (
+				20C4A947264584F8009B0657 /* SudokuStateTests.swift */,
+				20C4A9512645D8E8009B0657 /* SudokuViewModelTests.swift */,
+				20C4A949264584F8009B0657 /* Info.plist */,
+			);
+			path = SudokuTests;
+			sourceTree = "<group>";
+		};
+		20C4A9592647364F009B0657 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				20C4A9292641C5CD009B0657 /* ContentView.swift */,
+				20C4A957264732BA009B0657 /* SudokuCellView.swift */,
+				20C4A95526473157009B0657 /* SudokuGridView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		20C4A95A264736AE009B0657 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				20C4A9532645E910009B0657 /* puzzles.json */,
+				20F99451264B1DC500E70461 /* PuzzleIterator.swift */,
+				20C4A94F2645877F009B0657 /* SudokuDataService.swift */,
+				20F9944D264B1D4B00E70461 /* SudokuFileData.swift */,
+				20F9944F264B1D8400E70461 /* SudokuTestData.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		20C4A95B26484918009B0657 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				20C4A93E26434317009B0657 /* CellAttribute.swift */,
+				20C4A95C26484933009B0657 /* CellBackground.swift */,
+				20C4A9362641C5F4009B0657 /* CellModel.swift */,
+				20C4A93A2641DD0A009B0657 /* SudokuState.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		20F9944C264B1CEA00E70461 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				20C4A93C26422A69009B0657 /* CellViewModel.swift */,
+				20C4A9382641C73A009B0657 /* SudokuViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -105,6 +199,24 @@
 			productReference = 20C4A9242641C5CD009B0657 /* Sudoku.app */;
 			productType = "com.apple.product-type.application";
 		};
+		20C4A944264584F8009B0657 /* SudokuTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 20C4A94C264584F8009B0657 /* Build configuration list for PBXNativeTarget "SudokuTests" */;
+			buildPhases = (
+				20C4A941264584F8009B0657 /* Sources */,
+				20C4A942264584F8009B0657 /* Frameworks */,
+				20C4A943264584F8009B0657 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				20C4A94B264584F8009B0657 /* PBXTargetDependency */,
+			);
+			name = SudokuTests;
+			productName = SudokuTests;
+			productReference = 20C4A945264584F8009B0657 /* SudokuTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -116,6 +228,10 @@
 				TargetAttributes = {
 					20C4A9232641C5CD009B0657 = {
 						CreatedOnToolsVersion = 12.5;
+					};
+					20C4A944264584F8009B0657 = {
+						CreatedOnToolsVersion = 12.5;
+						TestTargetID = 20C4A9232641C5CD009B0657;
 					};
 				};
 			};
@@ -133,6 +249,7 @@
 			projectRoot = "";
 			targets = (
 				20C4A9232641C5CD009B0657 /* Sudoku */,
+				20C4A944264584F8009B0657 /* SudokuTests */,
 			);
 		};
 /* End PBXProject section */
@@ -144,6 +261,14 @@
 			files = (
 				20C4A92F2641C5CE009B0657 /* Preview Assets.xcassets in Resources */,
 				20C4A92C2641C5CE009B0657 /* Assets.xcassets in Resources */,
+				20C4A9542645E910009B0657 /* puzzles.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		20C4A943264584F8009B0657 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -174,17 +299,42 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20C4A9502645877F009B0657 /* SudokuDataService.swift in Sources */,
 				20C4A92A2641C5CD009B0657 /* ContentView.swift in Sources */,
 				20C4A9282641C5CD009B0657 /* SudokuApp.swift in Sources */,
+				20C4A95626473157009B0657 /* SudokuGridView.swift in Sources */,
+				20C4A95D26484933009B0657 /* CellBackground.swift in Sources */,
 				20C4A9372641C5F4009B0657 /* CellModel.swift in Sources */,
 				20C4A93F26434317009B0657 /* CellAttribute.swift in Sources */,
 				20C4A9392641C73A009B0657 /* SudokuViewModel.swift in Sources */,
+				20F99450264B1D8400E70461 /* SudokuTestData.swift in Sources */,
+				20F99452264B1DC500E70461 /* PuzzleIterator.swift in Sources */,
+				200540F626D73066001780D9 /* Extensions.swift in Sources */,
+				20F9944E264B1D4B00E70461 /* SudokuFileData.swift in Sources */,
+				20C4A958264732BA009B0657 /* SudokuCellView.swift in Sources */,
 				20C4A93D26422A69009B0657 /* CellViewModel.swift in Sources */,
 				20C4A93B2641DD0A009B0657 /* SudokuState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		20C4A941264584F8009B0657 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				20C4A948264584F8009B0657 /* SudokuStateTests.swift in Sources */,
+				20C4A9522645D8E8009B0657 /* SudokuViewModelTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		20C4A94B264584F8009B0657 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 20C4A9232641C5CD009B0657 /* Sudoku */;
+			targetProxy = 20C4A94A264584F8009B0657 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		20C4A9312641C5CE009B0657 /* Debug */ = {
@@ -347,6 +497,46 @@
 			};
 			name = Release;
 		};
+		20C4A94D264584F8009B0657 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = BGR2CU5KFK;
+				INFOPLIST_FILE = SudokuTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = blacklabs.SudokuTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Sudoku.app/Sudoku";
+			};
+			name = Debug;
+		};
+		20C4A94E264584F8009B0657 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = BGR2CU5KFK;
+				INFOPLIST_FILE = SudokuTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = blacklabs.SudokuTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Sudoku.app/Sudoku";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -364,6 +554,15 @@
 			buildConfigurations = (
 				20C4A9342641C5CE009B0657 /* Debug */,
 				20C4A9352641C5CE009B0657 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		20C4A94C264584F8009B0657 /* Build configuration list for PBXNativeTarget "SudokuTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				20C4A94D264584F8009B0657 /* Debug */,
+				20C4A94E264584F8009B0657 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

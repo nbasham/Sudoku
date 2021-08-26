@@ -14,6 +14,7 @@ struct SudokuApp: App {
             NavigationView {
                 ContentView()
             }
+            .navigationViewStyle(StackNavigationViewStyle())
         }
     }
 }

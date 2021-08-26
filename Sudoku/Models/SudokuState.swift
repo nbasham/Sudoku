@@ -32,4 +32,13 @@ class SudokuState: ObservableObject {
 extension SudokuState {
     var selectedCell: CellModel { cells[selectionIndex] }
     var isSolved: Bool { cells.allSatisfy { $0.isCorrect } }
+    var clueCount: Int { cells.filter { $0.attribute == .clue }.count }
+    var difficultyLevel: String {
+        switch clueCount {
+        case 27: return "Evil"
+        case 30: return "Hard"
+        case 33: return "Medium"
+        default: return "Easy"
+        }
+    }
 }
