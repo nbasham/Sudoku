@@ -1,10 +1,17 @@
 import Foundation
 
+struct LastAction {
+    let isGuess: Bool
+    let value: Int
+}
+
 class SudokuController: ObservableObject {
     internal let state: SudokuState
     private let puzzleSource: PuzzleSource
     private var subscriptions = Set<AnyCancellable>()
+    private var lastAction: LastAction?
     @Published var viewModel: SudokuViewModel
+    var undoManager: UndoHistory<SudokuUndoState>?
 
     init(puzzleSource: PuzzleSource = FilePuzzleSource()) {
         self.puzzleSource = puzzleSource
@@ -19,6 +26,7 @@ class SudokuController: ObservableObject {
         state.startGame(cells: cells)
         viewModel.startGame(difficutlyLevel: self.state.difficultyLevel)
         calcNumbersUsed()
+        undoManager = UndoHistory(initialValue: state.undoState)
     }
 
     private func cellTouched(index: Int) {
@@ -26,14 +34,15 @@ class SudokuController: ObservableObject {
         if cell.isCorrect {
             viewModel.setSelectedNumber(cell.answer)
         } else {
-            print("state.selectionIndex \(index)")
             state.selectionIndex = index
         }
     }
 
     private func numberTouched(number: Int) {
         state.setGuess(number: number)
+        lastAction = LastAction(isGuess: true, value: number)
         calcNumbersUsed()
+        undoManager?.currentItem = state.undoState
     }
 
     private func calcNumbersUsed() {
@@ -46,12 +55,13 @@ class SudokuController: ObservableObject {
             }
             index += 1
         }
-//        viewModel.objectWillChange.send()
         viewModel.usage = usage
     }
 
     private func markerTouched(number: Int) {
         state.setMarker(number: number)
+        lastAction = LastAction(isGuess: false, value: number)
+        undoManager?.currentItem = state.undoState
     }
 }
 
@@ -70,24 +80,37 @@ private extension SudokuController {
 
         // cell touch set state.selectionIndex to new value
         center.publisher(for: UserAction.cellTouch, object: nil)
-            // swiftlint:disable force_cast
-            .map({ ($0.object as! NSNumber).intValue })
+            .map { $0.asInt() }
             .sink {
+                self.cellTouched(index: $0)
+            }
+            .store(in: &subscriptions)
+
+        // cell double tap repeats last action
+        center.publisher(for: UserAction.cellDoubleTouch, object: nil)
+            .map { $0.asInt() }
+            .sink {
+                self.cellTouched(index: $0)
+                if let action = self.lastAction {
+                    if action.isGuess {
+                        self.numberTouched(number: action.value)
+                    } else {
+                        self.markerTouched(number: action.value)
+                    }
+                }
                 self.cellTouched(index: $0)
             }
             .store(in: &subscriptions)
 
         // number pad touch tell state there was a guess
         center.publisher(for: UserAction.numberTouch, object: nil)
-            // swiftlint:disable force_cast
-            .map({ ($0.object as! NSNumber).intValue })
+            .map { $0.asInt() }
             .sink { self.numberTouched(number: $0) }
             .store(in: &subscriptions)
 
         // number pad touch tell state to update marker
         center.publisher(for: UserAction.markerTouch, object: nil)
-            // swiftlint:disable force_cast
-            .map({ ($0.object as! NSNumber).intValue })
+            .map { $0.asInt() }
             .sink { self.markerTouched(number: $0) }
             .store(in: &subscriptions)
 
@@ -106,13 +129,24 @@ private extension SudokuController {
                 self.calcNumbersUsed()
             }
             .store(in: &subscriptions)
+
+        center.publisher(for: UserAction.undo, object: nil)
+            .sink { _ in
+                self.undoManager?.undo()
+                if let item = self.undoManager?.currentItem {
+                    self.state.applyUndoState(item)
+                }
+            }
+            .store(in: &subscriptions)
+
     }
 
     func subscribeToStateChanges() {
         state.$selectionIndex
-            //            .filter { _ in !self.cells.isEmpty }
+//            .handleEvents(receiveOutput: { index in
+//                self.viewModel.setSelection(index: index)
+//            })
             .sink {
-                print("viewModel.selectionIndex \($0)")
                 self.viewModel.setSelection(index: $0)
             }
             .store(in: &subscriptions)
@@ -144,7 +178,10 @@ class UserAction: ObservableObject {
     let center = NotificationCenter.default
     static let startGame = Notification.Name("ui_startGame")
     static let cellTouch = Notification.Name("ui_celltouch")
+    static let cellDoubleTouch = Notification.Name("ui_celldoubletouch")
     static let numberTouch = Notification.Name("ui_numbertouch")
     static let markerTouch = Notification.Name("ui_markertouch")
+    static let undo = Notification.Name("ui_undo")
+    static let redo = Notification.Name("ui_redo")
     static let almostSolve = Notification.Name("debug_almostsolve")
 }

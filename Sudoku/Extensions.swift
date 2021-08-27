@@ -1,5 +1,12 @@
 import Foundation
 
+extension NotificationCenter.Publisher.Output {
+    func asInt() -> Int {
+        // swiftlint:disable force_cast
+        return (self.object as! NSNumber).intValue
+    }
+}
+
 public extension Collection {
     /// Returns the element at the specified index iff it is within bounds, otherwise nil.
     subscript (safe index: Index) -> Element? {

@@ -4,7 +4,9 @@ struct NumberUsageView: View {
     let usage: [Bool]
 
     var body: some View {
-        let columns = [GridItem(.flexible(), spacing: 0), GridItem(.flexible(), spacing: 0), GridItem(.flexible(), spacing: 0)]
+        let columns = [GridItem(.flexible(), spacing: 0),
+                       GridItem(.flexible(), spacing: 0),
+                       GridItem(.flexible(), spacing: 0)]
         LazyVGrid(columns: columns, alignment: .leading, spacing: 0) {
             ForEach(0...8, id: \.self) { index in
                 Rectangle()

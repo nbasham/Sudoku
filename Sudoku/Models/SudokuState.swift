@@ -1,9 +1,22 @@
 import Combine
 
+struct SudokuUndoState {
+    let selectionIndex: Int
+    let cells: [CellModel]
+}
 class SudokuState: ObservableObject {
     @Published var selectionIndex: Int = 0
     @Published var cells: [CellModel] = []
     private var subscriptions = Set<AnyCancellable>()
+
+    var undoState: SudokuUndoState {
+        SudokuUndoState(selectionIndex: selectionIndex, cells: cells)
+    }
+
+    func applyUndoState(_ undoState: SudokuUndoState) {
+        selectionIndex = undoState.selectionIndex
+        cells = undoState.cells
+    }
 
     func startGame(cells: [CellModel]) {
         self.cells = cells
@@ -20,6 +33,9 @@ class SudokuState: ObservableObject {
         removeExistingGuesses(forNumber: number)
         removeMarkersEqualToGuess(guess: number)
         cells[selectionIndex] = CellModel(answer: selectedCell.answer, attribute: attribute)
+        if let lastNumber = lastNumberRemaining {
+            print("Only \(lastNumber) remains, fill it in, if settings agree.")
+        }
     }
 
     func setMarker(number: Int) {
@@ -34,6 +50,7 @@ class SudokuState: ObservableObject {
         }
     }
 
+    /// After a guess clear guess in the same grid that are the same as the guessed number.
     private func removeExistingGuesses(forNumber number: Int) {
         let gridIndexes = SudokuConstants.gridIndexes(selectionIndex)
         for gridIndex in gridIndexes {
@@ -44,6 +61,7 @@ class SudokuState: ObservableObject {
         }
     }
 
+    /// After a guess clear markers in the same grid, row, and or col that are the same as the guessed number.
     private func removeMarkersEqualToGuess(guess number: Int) {
         let rowColGridIndexes = SudokuConstants.rowColGridIndexes(selectionIndex)
         for index in rowColGridIndexes {
@@ -69,5 +87,12 @@ extension SudokuState {
         case 33: return "Medium"
         default: return "Easy"
         }
+    }
+    var lastNumberRemaining: Int? {
+        let unansweredIndexes = SudokuConstants.CELLINDEXES.filter { cells[$0].value != nil }
+        let numbers = unansweredIndexes.compactMap { cells[$0].value }
+        let firstCell = cells[unansweredIndexes[0]]
+        let allTheSame = numbers.allSatisfy { firstCell.answer == cells[$0].answer }
+        return allTheSame ? firstCell.answer : nil
     }
 }

@@ -11,6 +11,7 @@
 		200540F826D734E6001780D9 /* SudokuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200540F726D734E6001780D9 /* SudokuController.swift */; };
 		200540FA26D825BC001780D9 /* SudokuConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200540F926D825BC001780D9 /* SudokuConstants.swift */; };
 		200540FC26D82A81001780D9 /* NumberUsageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200540FB26D82A81001780D9 /* NumberUsageView.swift */; };
+		200540FE26D8C584001780D9 /* UndoHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200540FD26D8C584001780D9 /* UndoHistory.swift */; };
 		20C4A9282641C5CD009B0657 /* SudokuApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C4A9272641C5CD009B0657 /* SudokuApp.swift */; };
 		20C4A92A2641C5CD009B0657 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C4A9292641C5CD009B0657 /* ContentView.swift */; };
 		20C4A92C2641C5CE009B0657 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20C4A92B2641C5CE009B0657 /* Assets.xcassets */; };
@@ -44,6 +45,7 @@
 		200540F726D734E6001780D9 /* SudokuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuController.swift; sourceTree = "<group>"; };
 		200540F926D825BC001780D9 /* SudokuConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuConstants.swift; sourceTree = "<group>"; };
 		200540FB26D82A81001780D9 /* NumberUsageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberUsageView.swift; sourceTree = "<group>"; };
+		200540FD26D8C584001780D9 /* UndoHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UndoHistory.swift; sourceTree = "<group>"; };
 		20C4A9242641C5CD009B0657 /* Sudoku.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sudoku.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		20C4A9272641C5CD009B0657 /* SudokuApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuApp.swift; sourceTree = "<group>"; };
 		20C4A9292641C5CD009B0657 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 				20C4A9272641C5CD009B0657 /* SudokuApp.swift */,
 				200540F726D734E6001780D9 /* SudokuController.swift */,
 				200540F926D825BC001780D9 /* SudokuConstants.swift */,
+				200540FD26D8C584001780D9 /* UndoHistory.swift */,
 				20C4A92B2641C5CE009B0657 /* Assets.xcassets */,
 				20C4A95A264736AE009B0657 /* Data */,
 				20C4A95B26484918009B0657 /* Models */,
@@ -303,6 +306,7 @@
 				200540FA26D825BC001780D9 /* SudokuConstants.swift in Sources */,
 				200540F826D734E6001780D9 /* SudokuController.swift in Sources */,
 				20C4A92A2641C5CD009B0657 /* ContentView.swift in Sources */,
+				200540FE26D8C584001780D9 /* UndoHistory.swift in Sources */,
 				20C4A9282641C5CD009B0657 /* SudokuApp.swift in Sources */,
 				20C4A95626473157009B0657 /* SudokuGridView.swift in Sources */,
 				20C4A95D26484933009B0657 /* CellBackground.swift in Sources */,

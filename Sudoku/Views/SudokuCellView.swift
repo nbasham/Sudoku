@@ -22,9 +22,12 @@ struct SudokuCellView: View {
             .background(
                 viewModel.cellBackgroundColors[cell.id]
             )
-            .onTapGesture {
+            .gesture(TapGesture(count: 2).onEnded {
+                UserAction.cellDoubleTouch.send(obj: cell.id)
+            })
+            .simultaneousGesture(TapGesture().onEnded {
                 UserAction.cellTouch.send(obj: cell.id)
-            }
+            })
     }
 
     func markersView(cell: CellViewModel) -> some View {

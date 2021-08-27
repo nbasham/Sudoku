@@ -33,7 +33,12 @@ struct ContentView: View {
         .onAppear {
             UserAction.startGame.send()
         }
-        .navigationBarItems(trailing: Button("Debug", action: { UserAction.almostSolve.send() }))
+        .navigationBarItems(trailing:
+                                HStack {
+                                    Button("Undo", action: { UserAction.undo.send() })
+                                    Button("Debug", action: { UserAction.almostSolve.send() })
+                                }
+        )
         .navigationTitle(viewModel.difficultyLevel)
         .alert(isPresented: $viewModel.isSolved) {
             Alert(
