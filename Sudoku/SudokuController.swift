@@ -43,6 +43,7 @@ class SudokuController: ObservableObject {
         lastAction = LastAction(isGuess: true, value: number)
         calcNumbersUsed()
         undoManager?.currentItem = state.undoState
+        viewModel.isSolved = state.isSolved
     }
 
     private func calcNumbersUsed() {
@@ -68,7 +69,7 @@ class SudokuController: ObservableObject {
         let viewModelCells = cells.enumerated().map {
             CellViewModel(id: $0, model: $1, conflicts: markerConflicts)
         }
-        viewModel.setCells(viewModelCells, isSolved: state.isSolved)
+        viewModel.setCells(viewModelCells)
 
         func markerConflicts(_ cellIndex: Int, markerValue: Int) -> Bool {
             for indexes in [SudokuConstants.rowIndexes(cellIndex),

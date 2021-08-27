@@ -46,6 +46,7 @@
 		200540F926D825BC001780D9 /* SudokuConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuConstants.swift; sourceTree = "<group>"; };
 		200540FB26D82A81001780D9 /* NumberUsageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberUsageView.swift; sourceTree = "<group>"; };
 		200540FD26D8C584001780D9 /* UndoHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UndoHistory.swift; sourceTree = "<group>"; };
+		2005412226D973F0001780D9 /* Sudoku.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Sudoku.entitlements; sourceTree = "<group>"; };
 		20C4A9242641C5CD009B0657 /* Sudoku.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sudoku.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		20C4A9272641C5CD009B0657 /* SudokuApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuApp.swift; sourceTree = "<group>"; };
 		20C4A9292641C5CD009B0657 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -107,6 +108,7 @@
 		20C4A9262641C5CD009B0657 /* Sudoku */ = {
 			isa = PBXGroup;
 			children = (
+				2005412226D973F0001780D9 /* Sudoku.entitlements */,
 				20C4A9302641C5CE009B0657 /* Info.plist */,
 				200540F526D73066001780D9 /* Extensions.swift */,
 				20C4A9272641C5CD009B0657 /* SudokuApp.swift */,
@@ -462,6 +464,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Sudoku/Sudoku.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Sudoku/Preview Content\"";
 				DEVELOPMENT_TEAM = BGR2CU5KFK;
@@ -474,6 +477,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = blacklabs.Sudoku;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -484,6 +488,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Sudoku/Sudoku.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Sudoku/Preview Content\"";
 				DEVELOPMENT_TEAM = BGR2CU5KFK;
@@ -496,6 +501,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = blacklabs.Sudoku;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

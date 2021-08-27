@@ -26,10 +26,9 @@ class SudokuViewModel: ObservableObject {
         calcBackground()
     }
 
-    func setCells(_ cells: [CellViewModel], isSolved: Bool) {
+    func setCells(_ cells: [CellViewModel]) {
         self.cells = cells
         calcBackground()
-        self.isSolved = isSolved
     }
 
     func startGame(difficutlyLevel: String) {
