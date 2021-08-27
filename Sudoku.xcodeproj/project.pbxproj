@@ -90,9 +90,9 @@
 		20C4A91B2641C5CD009B0657 = {
 			isa = PBXGroup;
 			children = (
+				20C4A9252641C5CD009B0657 /* Products */,
 				20C4A9262641C5CD009B0657 /* Sudoku */,
 				20C4A946264584F8009B0657 /* SudokuTests */,
-				20C4A9252641C5CD009B0657 /* Products */,
 			);
 			sourceTree = "<group>";
 		};

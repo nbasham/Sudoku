@@ -118,7 +118,6 @@ class SudokuController: ObservableObject {
                 markerTouched(number: action.value)
             }
         }
-        cellTouched(index: index)
     }
 
     private func almostSolve() {
