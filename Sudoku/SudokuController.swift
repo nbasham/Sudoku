@@ -136,7 +136,7 @@ class SudokuController: ObservableObject {
 
     private func almostSolveExceptFour() {
         let lastEmptyCell = state.cells.lastIndex { $0.isEmpty } ?? 79
-        for index in 0..<lastEmptyCell {
+        for index in 0..<lastEmptyCell-1 {
             let cell = state.cells[index]
             guard cell.answer != 4 else { continue }
             if !cell.isCorrect {

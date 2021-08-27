@@ -10,7 +10,7 @@ struct NumberUsageView: View {
         LazyVGrid(columns: columns, alignment: .leading, spacing: 0) {
             ForEach(0...8, id: \.self) { index in
                 Rectangle()
-                    .stroke(Color.black, lineWidth: 1)
+                    .stroke(Color.primary, lineWidth: 1)
                     .padding(0)
                     .aspectRatio(1, contentMode: .fill)
                     .background(
@@ -21,7 +21,7 @@ struct NumberUsageView: View {
         }
         .overlay(
             Rectangle()
-                .strokeBorder(Color.black, lineWidth: 1)
+                .strokeBorder(Color.primary, lineWidth: 1)
         )
         .padding(0)
 //        .frame(width: 15)
