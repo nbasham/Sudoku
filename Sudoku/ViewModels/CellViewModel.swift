@@ -3,6 +3,8 @@ import SwiftUI
 struct CellViewModel: Identifiable {
     let id: Int
     let text: String
+    let fontSize: CGFloat
+    let fontWeight: Font.Weight
     let color: Color
     let markers: [String]
     let markerConflicts: [Bool]
@@ -10,6 +12,8 @@ struct CellViewModel: Identifiable {
     init(id: Int, model: CellModel, conflicts: (Int, Int) -> Bool) {
         self.id = id
         self.text = model.markers.isEmpty ? model.text : ""
+        self.fontSize = isPad ? 23 : 15
+        self.fontWeight = model.fontWeight
         color = model.markers.isEmpty ? model.color : Color(UIColor.label)
         if model.markers.isEmpty {
             markers = Array(repeating: "", count: 9)
@@ -26,6 +30,7 @@ struct CellViewModel: Identifiable {
     }
 }
 
+/// Helpers for building view model.
 private extension CellModel {
     var text: String {
         switch self.attribute {
@@ -34,10 +39,17 @@ private extension CellModel {
         case let .guess(number): return "\(number)"
         }
     }
+    var fontWeight: Font.Weight {
+        switch self.attribute {
+        case .empty: return .regular
+        case .clue: return .medium
+        case .guess(_): return .regular
+        }
+    }
     var color: Color {
         switch self.attribute {
         case .empty: return .primary
-        case .clue: return .blue
+        case .clue: return .primary
         case let .guess(number): return number == answer ? .primary : .red
         }
     }

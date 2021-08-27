@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+let isPad: Bool = UIDevice.current.userInterfaceIdiom == .pad
+
 @main
 struct SudokuApp: App {
     @StateObject var controller: SudokuController

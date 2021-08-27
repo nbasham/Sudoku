@@ -1,10 +1,12 @@
 import Combine
 
-struct SudokuUndoState {
-    let selectionIndex: Int
-    let cells: [CellModel]
-}
 class SudokuState: ObservableObject {
+    ///  Used as a value type for SudokuState, so undo states can be stored in a stack.
+    struct SudokuUndoState {
+        let selectionIndex: Int
+        let cells: [CellModel]
+    }
+
     @Published var selectionIndex: Int = 0
     @Published var cells: [CellModel] = []
     private var subscriptions = Set<AnyCancellable>()

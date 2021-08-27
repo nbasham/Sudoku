@@ -13,6 +13,9 @@ class SudokuViewModel: ObservableObject {
     let debugPublisher = PassthroughSubject<Void, Never>()
     private var subscriptions = Set<AnyCancellable>()
 
+    let usageViewFontSize: CGFloat = isPad ? 15 : 11
+    let pickerButtonLength: CGFloat = isPad ? 44 : 44
+
     func setSelection(index: Int) {
         selectionIndex = index
         calcBackground()

@@ -12,7 +12,7 @@ struct SudokuCellView: View {
             .aspectRatio(1, contentMode: .fill)
             .overlay(
                 Text("\(cell.text)")
-//                    .font(.system(size: sizeClass == .compact ? 8 : 32, design: .monospaced))
+                    .font(.system(size: cell.fontSize, weight: cell.fontWeight, design: .rounded))
                     .foregroundColor(cell.color)
             )
             .overlay(

@@ -90,8 +90,10 @@ struct ContentView: View {
         HStack(spacing: 10) {
             ForEach(0...8, id: \.self) { index in
                 VStack(spacing: 2) {
-                    Text("\(index + 1)")
                     NumberUsageView(usage: viewModel.usage[index])
+                    Text("\(index + 1)")
+                        .font(.system(size: viewModel.usageViewFontSize, weight: .bold, design: .rounded))
+                        .foregroundColor(.secondary)
                 }
             }
         }
@@ -99,7 +101,7 @@ struct ContentView: View {
     }
 
     func pickerButton(index: Int, action: @escaping () -> Void) -> some View {
-        let len: CGFloat = 44 // sizeClass == .compact ? 44 : 64
+        let len: CGFloat = viewModel.pickerButtonLength
         return Button(action: {
             action()
         }, label: {
