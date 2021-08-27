@@ -201,6 +201,10 @@ private extension SudokuController {
             .sink { _ in self.undo() }
             .store(in: &subscriptions)
 
+        center.publisher(for: UserAction.highlightNumber)
+            .map { $0.asInt() }
+            .sink { self.viewModel.setSelectedNumber($0) }
+            .store(in: &subscriptions)
     }
 
     func subscribeToStateChanges() {
@@ -222,6 +226,6 @@ class UserAction: ObservableObject {
     static let numberTouch = Notification.Name("ui_numbertouch")
     static let markerTouch = Notification.Name("ui_markertouch")
     static let undo = Notification.Name("ui_undo")
-    static let redo = Notification.Name("ui_redo")
+    static let highlightNumber = Notification.Name("ui_highlightnumber")
     static let almostSolve = Notification.Name("debug_almostsolve")
 }

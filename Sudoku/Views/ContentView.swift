@@ -97,12 +97,14 @@ struct ContentView: View {
     func usageView() -> some View {
         HStack(spacing: 10) {
             ForEach(0...8, id: \.self) { index in
-                VStack(spacing: 2) {
-                    NumberUsageView(usage: viewModel.usage[index])
-                    Text("\(index + 1)")
-                        .font(.system(size: viewModel.usageViewFontSize, weight: .bold, design: .rounded))
-                        .foregroundColor(.secondary)
-                }
+                Button(action: { UserAction.highlightNumber.send(obj: index+1) }, label: {
+                    VStack(spacing: 2) {
+                        NumberUsageView(usage: viewModel.usage[index])
+                        Text("\(index + 1)")
+                            .font(.system(size: viewModel.usageViewFontSize, weight: .bold, design: .rounded))
+                            .foregroundColor(.secondary)
+                    }
+                })
             }
         }
         .padding(.horizontal)
