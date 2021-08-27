@@ -35,9 +35,6 @@ class SudokuState: ObservableObject {
         removeExistingGuesses(forNumber: number)
         removeMarkersEqualToGuess(guess: number)
         cells[selectionIndex] = CellModel(answer: selectedCell.answer, attribute: attribute)
-        if let lastNumber = lastNumberRemaining {
-            print("Only \(lastNumber) remains, fill it in, if settings agree.")
-        }
     }
 
     func setMarker(number: Int) {
@@ -91,10 +88,9 @@ extension SudokuState {
         }
     }
     var lastNumberRemaining: Int? {
-        let unansweredIndexes = SudokuConstants.CELLINDEXES.filter { cells[$0].value != nil }
-        let numbers = unansweredIndexes.compactMap { cells[$0].value }
-        let firstCell = cells[unansweredIndexes[0]]
-        let allTheSame = numbers.allSatisfy { firstCell.answer == cells[$0].answer }
-        return allTheSame ? firstCell.answer : nil
+        let unansweredIndexes = SudokuConstants.CELLINDEXES.filter { cells[$0].value == nil }
+        let firstCellAnswer = cells[unansweredIndexes[0]].answer
+        let allTheSame = unansweredIndexes.allSatisfy { firstCellAnswer == cells[$0].answer }
+        return allTheSame ? firstCellAnswer : nil
     }
 }

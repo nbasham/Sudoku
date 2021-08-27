@@ -60,8 +60,16 @@ struct ContentView: View {
             }
         }
         .overlay(
-            GeometryReader { reader in
-                SudokuGridView(size: reader.size)
+            ZStack {
+                GeometryReader { reader in
+                    SudokuGridView(size: reader.size)
+                }
+                Group {
+                    if viewModel.completingLastNumber {
+                        Text("Last Number")
+                            .font(.system(size: 28, weight: .black, design: .rounded))
+                    }
+                }
             }
         )
     }
@@ -126,8 +134,11 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
+        let controller = SudokuController(puzzleSource: TestPuzzleSource())
+        UserAction.startGame.send()
+        return NavigationView {
             ContentView()
+                .environmentObject(controller.viewModel)
         }
         .preferredColorScheme(.dark)
         .navigationViewStyle(StackNavigationViewStyle())

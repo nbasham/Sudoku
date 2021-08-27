@@ -9,6 +9,7 @@ class SudokuViewModel: ObservableObject {
     @Published var cellBackgroundColors: [Color] = CellBackground.initial
     @Published var difficultyLevel: String = ""
     @Published var selectedNumber: Int?
+    @Published var completingLastNumber: Bool = false
     @Published var usage: [[Bool]] = Array(repeating: Array(repeating: false, count: 9), count: 9)
     let debugPublisher = PassthroughSubject<Void, Never>()
     private var subscriptions = Set<AnyCancellable>()
@@ -35,6 +36,7 @@ class SudokuViewModel: ObservableObject {
         isSolved = false
         selectedNumber = nil
         self.difficultyLevel = difficultyLevel
+        self.completingLastNumber = false
     }
 
     private func calcBackground() {

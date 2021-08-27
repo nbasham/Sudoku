@@ -43,7 +43,32 @@ class SudokuController: ObservableObject {
         lastAction = LastAction(isGuess: true, value: number)
         calcNumbersUsed()
         undoManager?.currentItem = state.undoState
+        completeLast {
+            self.viewModel.isSolved = self.state.isSolved
+            self.viewModel.completingLastNumber = false
+        }
         viewModel.isSolved = state.isSolved
+    }
+
+    private func completeLast(completion: @escaping () -> Void) {
+        var count = 1
+        if let lastNumber = state.lastNumberRemaining {
+            self.viewModel.completingLastNumber = true
+            let enumeratedCells = state.cells.enumerated().filter { $1.isEmpty }
+            enumeratedCells.forEach { index, cell in
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 * Double(count)) { [count = count, index = index] in
+                    guard cell.answer == lastNumber else { fatalError() }
+                    self.state.cells[index] = CellModel(answer: lastNumber, attribute: .guess(lastNumber))
+                    self.calcNumbersUsed()
+                    if count == enumeratedCells.count {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                            completion()
+                        }
+                    }
+                }
+                count += 1
+            }
+        }
     }
 
     private func calcNumbersUsed() {
@@ -109,6 +134,20 @@ class SudokuController: ObservableObject {
         calcNumbersUsed()
     }
 
+    private func almostSolveExceptFour() {
+        let lastEmptyCell = state.cells.lastIndex { $0.isEmpty } ?? 79
+        for index in 0..<lastEmptyCell {
+            let cell = state.cells[index]
+            guard cell.answer != 4 else { continue }
+            if !cell.isCorrect {
+                state.selectionIndex = index
+                state.setGuess(number: cell.answer)
+            }
+        }
+        state.selectionIndex = state.cells.firstIndex { $0.isEmpty } ?? 0
+        calcNumbersUsed()
+    }
+
     private func undo() {
         undoManager?.undo()
         if let item = undoManager?.currentItem {
@@ -156,7 +195,7 @@ private extension SudokuController {
 
         //  Answer all but last cell
         center.publisher(for: UserAction.almostSolve, object: nil)
-            .sink { _ in self.almostSolve() }
+            .sink { _ in self.almostSolveExceptFour() }
             .store(in: &subscriptions)
 
         center.publisher(for: UserAction.undo, object: nil)
