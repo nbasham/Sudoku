@@ -51,23 +51,22 @@ class SudokuController: ObservableObject {
     }
 
     private func completeLast(completion: @escaping () -> Void) {
+        guard let lastNumber = state.lastNumberRemaining else { return }
         var count = 1
-        if let lastNumber = state.lastNumberRemaining {
-            self.viewModel.completingLastNumber = true
-            let enumeratedCells = state.cells.enumerated().filter { $1.isEmpty }
-            enumeratedCells.forEach { index, cell in
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 * Double(count)) { [count = count, index = index] in
-                    guard cell.answer == lastNumber else { fatalError() }
-                    self.state.cells[index] = CellModel(answer: lastNumber, attribute: .guess(lastNumber))
-                    self.calcNumbersUsed()
-                    if count == enumeratedCells.count {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                            completion()
-                        }
+        self.viewModel.completingLastNumber = true
+        let enumeratedCells = state.cells.enumerated().filter { $1.isEmpty }
+        enumeratedCells.forEach { index, cell in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 * Double(count)) { [count = count, index = index] in
+                guard cell.answer == lastNumber else { fatalError() }
+                self.state.cells[index] = CellModel(answer: lastNumber, attribute: .guess(lastNumber))
+                self.calcNumbersUsed()
+                if count == enumeratedCells.count {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        completion()
                     }
                 }
-                count += 1
             }
+            count += 1
         }
     }
 
@@ -155,6 +154,11 @@ class SudokuController: ObservableObject {
             syncViewModelCellsFromState(cells: state.cells)
         }
     }
+
+    func setSelectedNumber(_ number: Int) {
+        viewModel.setSelectedNumber(number)
+        lastAction = LastAction(isGuess: true, value: number)
+    }
 }
 
 import Combine
@@ -203,7 +207,7 @@ private extension SudokuController {
 
         center.publisher(for: UserAction.highlightNumber)
             .map { $0.asInt() }
-            .sink { self.viewModel.setSelectedNumber($0) }
+            .sink { self.setSelectedNumber($0) }
             .store(in: &subscriptions)
     }
 

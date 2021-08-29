@@ -5,6 +5,7 @@ struct ContentView: View {
     private let boardColumns = Array(repeating: GridItem(.flexible(), spacing: 0), count: 9)
     private let pickerColumns = Array(repeating: GridItem(.flexible(), spacing: 4), count: 3)
     @Environment(\.verticalSizeClass) var sizeClass
+    @State private var rotation: Double = 0
 
     var body: some View {
         VStack {
@@ -19,6 +20,14 @@ struct ContentView: View {
                         .frame(width: 152)
                 }
                 Spacer(minLength: 24)
+                Button(action: {
+                    withAnimation {
+                        rotation = rotation == 0 ? 180 : 0
+                    }
+                }, label: {
+                    Text("Swap")
+                })
+                Spacer(minLength: 24)
                 VStack {
                     Text("Markers")
                     markerPicker
@@ -30,14 +39,15 @@ struct ContentView: View {
         }
         .padding(.horizontal)
         .padding(.horizontal, sizeClass == .compact ? 0 : 64)
+            .rotationEffect(.degrees(rotation))
         .onAppear {
             UserAction.startGame.send()
         }
         .navigationBarItems(trailing:
-                                HStack {
-                                    Button("Undo", action: { UserAction.undo.send() })
-                                    Button("Debug", action: { UserAction.almostSolve.send() })
-                                }
+            HStack {
+                Button("Undo", action: { UserAction.undo.send() })
+                Button("Debug", action: { UserAction.almostSolve.send() })
+            }
         )
         .navigationTitle(viewModel.difficultyLevel)
         .alert(isPresented: $viewModel.isSolved) {
@@ -68,6 +78,7 @@ struct ContentView: View {
                     if viewModel.completingLastNumber {
                         Text("Last Number")
                             .font(.system(size: 28, weight: .black, design: .rounded))
+                            .foregroundColor(.blue)
                     }
                 }
             }
@@ -100,9 +111,18 @@ struct ContentView: View {
                 Button(action: { UserAction.highlightNumber.send(obj: index+1) }, label: {
                     VStack(spacing: 2) {
                         NumberUsageView(usage: viewModel.usage[index])
-                        Text("\(index + 1)")
-                            .font(.system(size: viewModel.usageViewFontSize, weight: .bold, design: .rounded))
-                            .foregroundColor(.secondary)
+                        Group {
+                            if viewModel.useColor {
+                                Circle()
+                                    .foregroundColor(viewModel.colorForNumber(index+1))
+                                    .padding(.top, 0)
+                            } else {
+                                Text("\(index + 1)")
+                                    .font(.system(size: viewModel.usageViewFontSize, weight: .bold, design: .rounded))
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+
                     }
                 })
             }
@@ -124,8 +144,16 @@ struct ContentView: View {
                     )
             }
             .overlay(
-                Text("\(index)")
-                    .foregroundColor(.white)
+                Group {
+                    if viewModel.useColor {
+                        Circle()
+                            .foregroundColor(viewModel.colorForNumber(index))
+                            .padding(8)
+                    } else {
+                        Text("\(index)")
+                            .foregroundColor(.white)
+                    }
+                }
             )
         }
         )
@@ -136,13 +164,15 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
+        let useColor = false
         let controller = SudokuController(puzzleSource: TestPuzzleSource())
         UserAction.startGame.send()
+        controller.viewModel.useColor = useColor
         return NavigationView {
             ContentView()
                 .environmentObject(controller.viewModel)
         }
-        .preferredColorScheme(.dark)
+        .preferredColorScheme(.light)
         .navigationViewStyle(StackNavigationViewStyle())
     }
 }

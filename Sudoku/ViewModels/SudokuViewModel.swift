@@ -14,8 +14,21 @@ class SudokuViewModel: ObservableObject {
     let debugPublisher = PassthroughSubject<Void, Never>()
     private var subscriptions = Set<AnyCancellable>()
 
+    var useColor = false
     let usageViewFontSize: CGFloat = isPad ? 15 : 11
     let pickerButtonLength: CGFloat = isPad ? 44 : 44
+
+    func colorForNumber(_ number: Int) -> Color {
+        [Color(hex: "D62469"),
+         Color(hex: "F87F1F"),
+         Color(hex: "F9C71E"),
+         Color(hex: "AFCE3B"),
+         Color(hex: "187349"),
+         Color(hex: "00ABED"),
+         Color(hex: "0665AE"),
+         Color(hex: "64095E"),
+         Color(hex: "000000")][number - 1]
+    }
 
     func setSelection(index: Int) {
         selectionIndex = index

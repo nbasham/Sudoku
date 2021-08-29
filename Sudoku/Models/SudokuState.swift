@@ -33,7 +33,7 @@ class SudokuState: ObservableObject {
         case .guess(let lastGuess): attribute = lastGuess == number ? .empty : .guess(number)
         }
         removeExistingGuesses(forNumber: number)
-        removeMarkersEqualToGuess(guess: number)
+        removeMarkersEqualToGuess(guess: number) // THIS should only be applied to grid
         cells[selectionIndex] = CellModel(answer: selectedCell.answer, attribute: attribute)
     }
 
@@ -60,10 +60,11 @@ class SudokuState: ObservableObject {
         }
     }
 
-    /// After a guess clear markers in the same grid, row, and or col that are the same as the guessed number.
+    /// After a guess clear markers in the same grid/*, row, and or col*/ that are the same as the guessed number.
     private func removeMarkersEqualToGuess(guess number: Int) {
-        let rowColGridIndexes = SudokuConstants.rowColGridIndexes(selectionIndex)
-        for index in rowColGridIndexes {
+//        let rowColGridIndexes = SudokuConstants.rowColGridIndexes(selectionIndex)
+        let indexes = SudokuConstants.gridIndexes(selectionIndex)
+        for index in indexes {
             if cells[index].markers.contains(number) {
                 cells[index].markers.remove(number)
             }
